@@ -16,7 +16,6 @@ model = tf.keras.models.load_model(model_path)
 labels = {0: 'ALL', 1: 'Uninfected'}
 
 
-
 image = cv2.imread(img_path)
 
 probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
@@ -30,4 +29,6 @@ prediction = np.squeeze(prediction)
 print(prediction)
 
 if prediction[0] >= 0.50:
-        print('infected')
+    print('infected')
+else:
+    print('uninfected')

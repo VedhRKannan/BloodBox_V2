@@ -26,16 +26,19 @@ def tile(filename, dir_in, dir_out, d):
 
 tile('M2.jpeg', '.', './tiled', 300)
 
+print('Tile complete')
+
 directory = './tiled'
-model_path = 'results/maleria_model/'
+model_path = 'results/malaria_model/'
 model = tf.keras.models.load_model(model_path)
 labels = {0: 'Uninfected', 1: 'Parasitized'}
 img_width, img_height = 28, 28
 probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
 
-print('good')
+print('Model Initialised')
 
 total = 0
+
 for filename in os.listdir(directory):
     f = os.path.join(directory, filename)
     if os.path.isfile(f):
@@ -48,10 +51,13 @@ for filename in os.listdir(directory):
         image = image / 255
         prediction = probability_model.predict(image)
         prediction = np.squeeze(prediction)
-        print(prediction)
+        print(prediction[1].round(2), 'infected probability')
+        print(prediction[0].round(2), 'uninfected probability')
         if prediction[1] >= 0.50:
-            print('infected')
+            print('Result: Infected')
             total += 1
+        else:
+            print('Result: Uninfected')
         prediction = np.argmax(prediction)
         output = labels[prediction]
 print(total)

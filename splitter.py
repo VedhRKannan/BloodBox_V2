@@ -15,4 +15,4 @@ def tile(filename, dir_in, dir_out, d):
         img.crop(box).save(out)
 
 
-tile('malaria.jpeg', '.', '.', 400)
+tile('M2.jpeg', '.', './tiled', 400)
